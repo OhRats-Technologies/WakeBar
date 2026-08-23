@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="WakeBar is a tiny macOS menu-bar utility for keeping your Mac awake.">
+    <title>WakeBar — Keep your Mac awake</title>
+    <link rel="icon" type="image/png" href="https://assets.ohrats.party/latest/logo.png">
+    <script src="https://assets.ohrats.party/latest/theme.js"></script>
+    <link rel="stylesheet" href="https://assets.ohrats.party/latest/ohrats.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --page-max: 1400px;
+            --nav-height: 72px;
+            --mock-bg: #d9d7d0;
+            --mock-bar: rgba(246, 246, 244, 0.84);
+            --mock-panel: rgba(246, 246, 245, 0.94);
+            --mock-panel-border: rgba(0, 0, 0, 0.16);
+            --mock-text: #171717;
+            --mock-muted: #6d6d6d;
+            --mock-hover: rgba(0, 0, 0, 0.06);
+            --mock-shadow: 0 28px 70px rgba(35, 29, 24, 0.24), 0 8px 20px rgba(35, 29, 24, 0.12);
+        }
+
+        html.dark {
+            --mock-bg: #121213;
+            --mock-bar: rgba(29, 29, 30, 0.88);
+            --mock-panel: rgba(40, 40, 41, 0.96);
+            --mock-panel-border: rgba(255, 255, 255, 0.13);
+            --mock-text: #f5f5f4;
+            --mock-muted: #ababaa;
+            --mock-hover: rgba(255, 255, 255, 0.07);
+            --mock-shadow: 0 30px 90px rgba(0, 0, 0, 0.48), 0 8px 26px rgba(0, 0, 0, 0.32);
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .site-nav {
+            height: var(--nav-height);
+            border-bottom: 1px solid var(--or-border);
+            background: color-mix(in srgb, var(--or-bg) 94%, transparent);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: relative;
+            z-index: 20;
+        }
+
+        .nav-inner {
+            max-width: var(--page-max);
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--or-border);
+            background: var(--or-surface);
+        }
+
+        .brand-mark svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            font-family: var(--or-font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--or-text-muted);
+            transition: color 160ms ease;
+        }
+
+        .nav-link:hover {
+            color: var(--or-text);
+        }
+
+        .theme-toggle {
+            width: 34px;
+            height: 34px;
+            border: 0;
+            background: transparent;
+            color: var(--or-text-muted);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+        }
+
+        .theme-toggle:hover {
+            color: var(--or-text);
+        }
+
+        .download-small,
+        .primary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            border: 1px solid var(--or-text);
+            background: var(--or-text);
+            color: var(--or-bg);
+            font-weight: 600;
+            transition: transform 160ms ease, opacity 160ms ease;
+        }
+
+        .download-small:hover,
+        .primary-button:hover {
+            transform: translateY(-1px);
+            opacity: 0.88;
+        }
+
+        .download-small {
+            min-height: 40px;
+            padding: 0 17px;
+            font-size: 0.85rem;
+        }
+
+        .hero {
+            position: relative;
+            min-height: calc(100vh - var(--nav-height));
+            border-bottom: 1px solid var(--or-border);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .grid {
+            position: absolute;
+            inset: 0;
+            background-size: 42px 42px;
+            background-image:
+                linear-gradient(to right, var(--or-grid) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--or-grid) 1px, transparent 1px);
+            mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent 72%);
+            -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent 72%);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            width: 100%;
+            max-width: var(--page-max);
+            margin: 0 auto;
+            padding: 84px 28px 92px;
+            display: grid;
+            grid-template-columns: minmax(0, 0.88fr) minmax(520px, 1.12fr);
+            align-items: center;
+            gap: clamp(48px, 7vw, 112px);
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-bottom: 27px;
+            color: var(--or-text-muted);
+            font-family: var(--or-font-mono);
+            font-size: 0.78rem;
+        }
+
+        .eyebrow-mark {
+            width: 25px;
+            height: 25px;
+            display: inline-grid;
+            place-items: center;
+            border: 1px solid var(--or-border);
+            background: var(--or-surface);
+        }
+
+        h1 {
+            max-width: 680px;
+            font-size: clamp(3.4rem, 6.1vw, 6.4rem);
+            letter-spacing: -0.072em;
+            line-height: 0.92;
+            font-weight: 700;
+        }
+
+        .lede {
+            max-width: 620px;
+            margin-top: 30px;
+            color: var(--or-text-muted);
+            font-size: clamp(1rem, 1.3vw, 1.25rem);
+            line-height: 1.65;
+        }
+
+        .install-row {
+            margin-top: 36px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .primary-button {
+            min-height: 52px;
+            padding: 0 22px;
+        }
+
+        .brew {
+            min-height: 52px;
+            max-width: 100%;
+            padding: 0 15px 0 18px;
+            border: 1px solid var(--or-border);
+            background: var(--or-surface);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--or-text);
+            font-family: var(--or-font-mono);
+            font-size: 0.78rem;
+        }
+
+        .brew-prefix {
+            color: var(--or-text-muted);
+        }
+
+        .brew code {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .copy {
+            flex: 0 0 auto;
+            border: 0;
+            background: transparent;
+            color: var(--or-text-muted);
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+        }
+
+        .copy:hover {
+            color: var(--or-text);
+        }
+
+        .meta {
+            margin-top: 21px;
+            font-family: var(--or-font-mono);
+            font-size: 0.72rem;
+            color: var(--or-text-muted);
+        }
+
+        .product-visual {
+            position: relative;
+            min-width: 0;
+        }
+
+        .mac-shell {
+            position: relative;
+            width: min(760px, 100%);
+            margin-left: auto;
+            padding: 10px;
+            border: 1px solid var(--or-border);
+            background: color-mix(in srgb, var(--or-border) 22%, var(--or-bg));
+            box-shadow: 22px 28px 0 color-mix(in srgb, var(--or-border) 12%, transparent);
+        }
+
+        .mac-screen {
+            position: relative;
+            height: 535px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 24% 70%, color-mix(in srgb, var(--or-border) 18%, transparent), transparent 30%),
+                linear-gradient(140deg, var(--mock-bg), color-mix(in srgb, var(--mock-bg) 90%, #857868));
+            color: var(--mock-text);
+        }
+
+        .mac-screen::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 42%);
+            pointer-events: none;
+        }
+
+        .menu-bar {
+            height: 38px;
+            padding: 0 15px;
+            background: var(--mock-bar);
+            border-bottom: 1px solid color-mix(in srgb, var(--mock-panel-border) 70%, transparent);
+            backdrop-filter: blur(22px) saturate(1.15);
+            -webkit-backdrop-filter: blur(22px) saturate(1.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font: 600 12px/1 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        }
+
+        .apple {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .menu-status {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .cup-status {
+            width: 22px;
+            height: 22px;
+            display: grid;
+            place-items: center;
+            border-radius: 5px;
+            background: color-mix(in srgb, var(--mock-text) 12%, transparent);
+        }
+
+        .menu-popover {
+            position: absolute;
+            z-index: 4;
+            top: 45px;
+            right: 12px;
+            width: 315px;
+            padding: 7px;
+            border: 1px solid var(--mock-panel-border);
+            border-radius: 13px;
+            background: var(--mock-panel);
+            color: var(--mock-text);
+            box-shadow: var(--mock-shadow);
+            backdrop-filter: blur(30px) saturate(1.35);
+            -webkit-backdrop-filter: blur(30px) saturate(1.35);
+            font: 13px/1.2 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        }
+
+        .menu-row {
+            min-height: 31px;
+            padding: 0 8px;
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: 21px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .menu-row:hover {
+            background: var(--mock-hover);
+        }
+
+        .menu-row .check {
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .menu-row .arrow {
+            color: var(--mock-muted);
+            font-size: 17px;
+            transform: translateY(-1px);
+        }
+
+        .menu-row .shortcut {
+            color: var(--mock-muted);
+            font-size: 12px;
+        }
+
+        .menu-separator {
+            height: 1px;
+            margin: 5px 7px;
+            background: var(--mock-panel-border);
+        }
+
+        .sleep-options {
+            position: absolute;
+            z-index: 3;
+            top: 100px;
+            right: 322px;
+            width: 282px;
+            padding: 7px;
+            border: 1px solid var(--mock-panel-border);
+            border-radius: 13px;
+            background: var(--mock-panel);
+            color: var(--mock-text);
+            box-shadow: var(--mock-shadow);
+            backdrop-filter: blur(30px) saturate(1.35);
+            -webkit-backdrop-filter: blur(30px) saturate(1.35);
+            font: 12.5px/1.2 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        }
+
+        .sleep-options .menu-row {
+            grid-template-columns: 20px minmax(0, 1fr);
+        }
+
+        .desktop-note {
+            position: absolute;
+            left: 26px;
+            bottom: 25px;
+            z-index: 2;
+            max-width: 230px;
+            color: var(--mock-muted);
+            font: 500 11px/1.45 -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .desktop-note strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--mock-text);
+            font-size: 13px;
+        }
+
+        .site-footer {
+            max-width: var(--page-max);
+            margin: 0 auto;
+            padding: 25px 28px 30px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            color: var(--or-text-muted);
+            font-family: var(--or-font-mono);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a:hover {
+            color: var(--or-text);
+        }
+
+        @media (max-width: 1100px) {
+            .hero {
+                min-height: auto;
+            }
+
+            .hero-inner {
+                grid-template-columns: 1fr;
+                padding-top: 74px;
+                gap: 58px;
+            }
+
+            .hero-copy {
+                max-width: 760px;
+            }
+
+            h1 {
+                max-width: 800px;
+            }
+
+            .mac-shell {
+                margin: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 720px) {
+            :root {
+                --nav-height: 62px;
+            }
+
+            .nav-inner,
+            .hero-inner,
+            .site-footer {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .brand-mark {
+                width: 30px;
+                height: 30px;
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            .nav-actions {
+                gap: 8px;
+            }
+
+            .download-small {
+                min-height: 36px;
+                padding: 0 12px;
+                font-size: 0.76rem;
+            }
+
+            .hero-inner {
+                padding-top: 60px;
+                padding-bottom: 62px;
+                gap: 46px;
+            }
+
+            .eyebrow {
+                margin-bottom: 21px;
+                font-size: 0.7rem;
+            }
+
+            h1 {
+                font-size: clamp(3.1rem, 15vw, 4.8rem);
+                letter-spacing: -0.07em;
+            }
+
+            .lede {
+                margin-top: 23px;
+                font-size: 0.98rem;
+            }
+
+            .install-row {
+                margin-top: 29px;
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .primary-button,
+            .brew {
+                width: 100%;
+            }
+
+            .brew {
+                min-width: 0;
+            }
+
+            .brew code {
+                font-size: 0.68rem;
+            }
+
+            .mac-shell {
+                padding: 6px;
+                box-shadow: 10px 12px 0 color-mix(in srgb, var(--or-border) 12%, transparent);
+            }
+
+            .mac-screen {
+                height: 440px;
+            }
+
+            .menu-bar {
+                padding: 0 10px;
+                font-size: 10.5px;
+            }
+
+            .menu-status {
+                gap: 9px;
+            }
+
+            .menu-status .hide-mobile {
+                display: none;
+            }
+
+            .menu-popover {
+                top: 45px;
+                right: 8px;
+                width: min(298px, calc(100% - 16px));
+            }
+
+            .sleep-options {
+                display: none;
+            }
+
+            .desktop-note {
+                left: 18px;
+                bottom: 18px;
+                max-width: 185px;
+            }
+
+            .site-footer {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a class="brand" href="/" aria-label="WakeBar home">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 8.5h11v5.3a4.2 4.2 0 0 1-4.2 4.2H9.2A4.2 4.2 0 0 1 5 13.8V8.5Z"/>
+                        <path d="M16 10h1.5a2.5 2.5 0 1 1 0 5H16"/>
+                        <path d="M7 5.5c0-1 1-1.2 1-2.2M11 5.5c0-1 1-1.2 1-2.2"/>
+                    </svg>
+                </span>
+                <span>WakeBar</span>
+            </a>
+            <div class="nav-actions">
+                <a class="nav-link" href="https://github.com/OhRats-Technologies/WakeBar">Source</a>
+                <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+                <a class="download-small" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <div class="grid"></div>
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <div class="eyebrow">
+                    <span class="eyebrow-mark" aria-hidden="true">☕</span>
+                    <span>macOS menu bar utility</span>
+                </div>
+                <h1>Keep your Mac awake.</h1>
+                <p class="lede">Tiny menu-bar controls for idle sleep and lid-close behavior. Nothing running in the way.</p>
+
+                <div class="install-row">
+                    <a class="primary-button" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">
+                        <span aria-hidden="true">●</span>
+                        Download for macOS
+                    </a>
+                    <div class="brew" title="brew install --cask OhRats-Technologies/tap/wakebar">
+                        <span class="brew-prefix">$</span>
+                        <code id="brew-command">brew install --cask OhRats-Technologies/tap/wakebar</code>
+                        <button class="copy" id="copy-brew" aria-label="Copy Homebrew command">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="9" y="9" width="11" height="11" rx="1"></rect>
+                                <path d="M15 9V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h4"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="meta">Free &amp; open source · macOS 14+</p>
+            </div>
+
+            <div class="product-visual" aria-label="Stylized preview of the WakeBar macOS menu">
+                <div class="mac-shell">
+                    <div class="mac-screen">
+                        <div class="menu-bar">
+                            <span class="apple">●</span>
+                            <div class="menu-status">
+                                <span class="cup-status" aria-hidden="true">☕</span>
+                                <span class="hide-mobile">◉</span>
+                                <span class="hide-mobile">⌁</span>
+                                <span>Sun Aug 23&nbsp;&nbsp;6:47 PM</span>
+                            </div>
+                        </div>
+
+                        <div class="sleep-options" aria-hidden="true">
+                            <div class="menu-row"><span class="check">✓</span><span>Prevent Idle System Sleep</span></div>
+                            <div class="menu-row"><span></span><span>Prevent Display Sleep</span></div>
+                            <div class="menu-row"><span></span><span>Prevent Disk Idle</span></div>
+                            <div class="menu-row"><span></span><span>Prevent System Sleep on AC Power</span></div>
+                        </div>
+
+                        <div class="menu-popover" aria-hidden="true">
+                            <div class="menu-row"><span class="check">✓</span><span>Sleep Prevention</span><span></span></div>
+                            <div class="menu-row"><span></span><span>Sleep Options</span><span class="arrow">›</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-row"><span class="check">✓</span><span>Keep Awake With Lid Closed</span><span></span></div>
+                            <div class="menu-row"><span></span><span>Open at Login</span><span></span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-row"><span></span><span>About WakeBar</span><span></span></div>
+                            <div class="menu-row"><span></span><span>Quit WakeBar</span><span class="shortcut">⌘Q</span></div>
+                        </div>
+
+                        <div class="desktop-note">
+                            <strong>Native macOS controls.</strong>
+                            WakeBar stays in the menu bar until you need it.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <span>© 2026 OhRats Technologies</span>
+        <div class="footer-links">
+            <a href="https://github.com/OhRats-Technologies/WakeBar">GitHub</a>
+            <a href="https://github.com/OhRats-Technologies/WakeBar/blob/main/LICENSE">AGPL-3.0</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("copy-brew").addEventListener("click", async () => {
+            const button = document.getElementById("copy-brew");
+            const command = document.getElementById("brew-command").textContent;
+            try {
+                await navigator.clipboard.writeText(command);
+                button.setAttribute("aria-label", "Copied");
+                setTimeout(() => button.setAttribute("aria-label", "Copy Homebrew command"), 1200);
+            } catch (_) {}
+        });
+    </script>
+</body>
+</html>

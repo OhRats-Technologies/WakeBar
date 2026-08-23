@@ -2,6 +2,8 @@
 
 Single-file macOS menu-bar utility for keeping your Mac awake.
 
+[wakebar.ohrats.party](https://wakebar.ohrats.party)
+
 ![WakeBar](wakebar.png)
 
 ## Install
