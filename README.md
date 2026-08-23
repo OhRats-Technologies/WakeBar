@@ -6,7 +6,11 @@ Single-file macOS menu-bar utility for keeping your Mac awake.
 
 ## Install
 
-Download the latest build from [GitHub Releases](../../releases/latest), unzip it, and move `WakeBar.app` to `/Applications`.
+```sh
+brew install --cask OhRats-Technologies/tap/wakebar
+```
+
+Or download it from [GitHub Releases](../../releases/latest).
 
 ## Build
 
