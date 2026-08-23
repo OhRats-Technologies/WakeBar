@@ -185,30 +185,17 @@
             position: relative;
             width: min(760px, 100%);
             margin-left: auto;
-            padding: 10px;
             border: 1px solid var(--or-border);
-            background: color-mix(in srgb, var(--or-border) 22%, var(--or-bg));
-            box-shadow: 22px 28px 0 color-mix(in srgb, var(--or-border) 12%, transparent);
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: border-color 0.3s ease;
         }
 
         .mac-screen {
             position: relative;
             height: 535px;
             overflow: hidden;
-            background:
-                radial-gradient(circle at 24% 70%, color-mix(in srgb, var(--or-border) 18%, transparent), transparent 30%),
-                linear-gradient(140deg, var(--mock-bg), color-mix(in srgb, var(--mock-bg) 90%, #857868));
+            background: var(--mock-bg);
             color: var(--mock-text);
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        .mac-screen::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 42%);
-            pointer-events: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .menu-bar {
@@ -456,11 +443,6 @@
                 font-size: 0.68rem;
             }
 
-            .mac-shell {
-                padding: 6px;
-                box-shadow: 10px 12px 0 color-mix(in srgb, var(--or-border) 12%, transparent);
-            }
-
             .mac-screen {
                 height: 440px;
             }
@@ -505,7 +487,7 @@
     <nav class="site-nav">
         <div class="nav-container">
             <div class="nav-left">
-                <a class="logo" href="/" aria-label="WakeBar home">
+                <a class="logo" href="https://ohrats.party" aria-label="OhRats home">
                     <img class="logo-image" src="https://assets.ohrats.party/latest/logo.png" alt="OhRats">
                     <span class="logo-text">WakeBar</span>
                 </a>
@@ -572,10 +554,10 @@
                             <img class="mock-symbol apple-symbol" src="/apple.logo.svg" alt="" aria-hidden="true">
                             <div class="menu-status">
                                 <span class="cup-status" aria-hidden="true"><img class="mock-symbol" src="/cup.and.saucer.fill.svg" alt=""></span>
-                                <img class="mock-symbol switch-symbol hide-mobile" src="/switch.2.svg" alt="" aria-hidden="true">
                                 <img class="mock-symbol wifi-symbol hide-mobile" src="/wifi.svg" alt="" aria-hidden="true">
-                                <img class="mock-symbol search-symbol hide-mobile" src="/magnifyingglass.svg" alt="" aria-hidden="true">
                                 <img class="mock-symbol battery-symbol hide-mobile" src="/battery.100percent.svg" alt="" aria-hidden="true">
+                                <img class="mock-symbol search-symbol hide-mobile" src="/magnifyingglass.svg" alt="" aria-hidden="true">
+                                <img class="mock-symbol switch-symbol hide-mobile" src="/switch.2.svg" alt="" aria-hidden="true">
                                 <span>Sun Aug 23&nbsp;&nbsp;6:47 PM</span>
                             </div>
                         </div>
