@@ -7,6 +7,7 @@
     <title>WakeBar — Keep your Mac awake</title>
     <link rel="icon" type="image/png" href="https://assets.ohrats.party/latest/logo.png">
     <script src="https://assets.ohrats.party/latest/theme.js"></script>
+    <script src="https://assets.ohrats.party/latest/menu.js" defer></script>
     <link rel="stylesheet" href="https://assets.ohrats.party/latest/ohrats.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +15,6 @@
     <style>
         :root {
             --page-max: 1400px;
-            --nav-height: 72px;
             --mock-bg: #d9d7d0;
             --mock-bar: rgba(246, 246, 244, 0.84);
             --mock-panel: rgba(246, 246, 245, 0.94);
@@ -40,83 +40,6 @@
             overflow-x: hidden;
         }
 
-        .site-nav {
-            height: var(--nav-height);
-            border-bottom: 1px solid var(--or-border);
-            background: color-mix(in srgb, var(--or-bg) 94%, transparent);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            position: relative;
-            z-index: 20;
-        }
-
-        .nav-inner {
-            max-width: var(--page-max);
-            height: 100%;
-            margin: 0 auto;
-            padding: 0 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 11px;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-        }
-
-        .brand-mark {
-            width: 34px;
-            height: 34px;
-            display: grid;
-            place-items: center;
-            border: 1px solid var(--or-border);
-            background: var(--or-surface);
-        }
-
-        .brand-mark svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-link {
-            font-family: var(--or-font-mono);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--or-text-muted);
-            transition: color 160ms ease;
-        }
-
-        .nav-link:hover {
-            color: var(--or-text);
-        }
-
-        .theme-toggle {
-            width: 34px;
-            height: 34px;
-            border: 0;
-            background: transparent;
-            color: var(--or-text-muted);
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-        }
-
-        .theme-toggle:hover {
-            color: var(--or-text);
-        }
-
-        .download-small,
         .primary-button {
             display: inline-flex;
             align-items: center;
@@ -126,28 +49,22 @@
             background: var(--or-text);
             color: var(--or-bg);
             font-weight: 600;
-            transition: transform 160ms ease, opacity 160ms ease;
+            transition: transform 160ms ease, opacity 160ms ease, background-color 0.3s ease, color 0.3s ease;
         }
 
-        .download-small:hover,
         .primary-button:hover {
             transform: translateY(-1px);
             opacity: 0.88;
         }
 
-        .download-small {
-            min-height: 40px;
-            padding: 0 17px;
-            font-size: 0.85rem;
-        }
-
         .hero {
             position: relative;
-            min-height: calc(100vh - var(--nav-height));
+            min-height: calc(100vh - 4rem);
             border-bottom: 1px solid var(--or-border);
             display: flex;
             align-items: center;
             overflow: hidden;
+            transition: border-color 0.3s ease;
         }
 
         .grid {
@@ -177,25 +94,6 @@
 
         .hero-copy {
             min-width: 0;
-        }
-
-        .eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            margin-bottom: 27px;
-            color: var(--or-text-muted);
-            font-family: var(--or-font-mono);
-            font-size: 0.78rem;
-        }
-
-        .eyebrow-mark {
-            width: 25px;
-            height: 25px;
-            display: inline-grid;
-            place-items: center;
-            border: 1px solid var(--or-border);
-            background: var(--or-surface);
         }
 
         h1 {
@@ -241,6 +139,7 @@
             color: var(--or-text);
             font-family: var(--or-font-mono);
             font-size: 0.78rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
         .brew-prefix {
@@ -290,6 +189,7 @@
             border: 1px solid var(--or-border);
             background: color-mix(in srgb, var(--or-border) 22%, var(--or-bg));
             box-shadow: 22px 28px 0 color-mix(in srgb, var(--or-border) 12%, transparent);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .mac-screen {
@@ -300,6 +200,7 @@
                 radial-gradient(circle at 24% 70%, color-mix(in srgb, var(--or-border) 18%, transparent), transparent 30%),
                 linear-gradient(140deg, var(--mock-bg), color-mix(in srgb, var(--mock-bg) 90%, #857868));
             color: var(--mock-text);
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .mac-screen::after {
@@ -321,11 +222,52 @@
             align-items: center;
             justify-content: space-between;
             font: 600 12px/1 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-        .apple {
-            font-size: 16px;
-            line-height: 1;
+        .mock-symbol {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            display: block;
+            filter: invert(1);
+        }
+
+        html.dark .mock-symbol {
+            filter: none;
+        }
+
+        .button-symbol {
+            filter: none;
+        }
+
+        html.dark .button-symbol {
+            filter: invert(1);
+        }
+
+        .apple-symbol {
+            width: 12px;
+            height: 16px;
+        }
+
+        .battery-symbol {
+            width: 24px;
+            height: 12px;
+        }
+
+        .wifi-symbol {
+            width: 18px;
+            height: 14px;
+        }
+
+        .search-symbol {
+            width: 14px;
+            height: 14px;
+        }
+
+        .switch-symbol {
+            width: 16px;
+            height: 16px;
         }
 
         .menu-status {
@@ -341,6 +283,12 @@
             place-items: center;
             border-radius: 5px;
             background: color-mix(in srgb, var(--mock-text) 12%, transparent);
+            transition: background-color 0.3s ease;
+        }
+
+        .cup-status .mock-symbol {
+            width: 15px;
+            height: 15px;
         }
 
         .menu-popover {
@@ -358,6 +306,7 @@
             backdrop-filter: blur(30px) saturate(1.35);
             -webkit-backdrop-filter: blur(30px) saturate(1.35);
             font: 13px/1.2 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .menu-row {
@@ -411,27 +360,11 @@
             backdrop-filter: blur(30px) saturate(1.35);
             -webkit-backdrop-filter: blur(30px) saturate(1.35);
             font: 12.5px/1.2 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .sleep-options .menu-row {
             grid-template-columns: 20px minmax(0, 1fr);
-        }
-
-        .desktop-note {
-            position: absolute;
-            left: 26px;
-            bottom: 25px;
-            z-index: 2;
-            max-width: 230px;
-            color: var(--mock-muted);
-            font: 500 11px/1.45 -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        .desktop-note strong {
-            display: block;
-            margin-bottom: 3px;
-            color: var(--mock-text);
-            font-size: 13px;
         }
 
         .site-footer {
@@ -482,45 +415,16 @@
         }
 
         @media (max-width: 720px) {
-            :root {
-                --nav-height: 62px;
-            }
-
-            .nav-inner,
             .hero-inner,
             .site-footer {
                 padding-left: 18px;
                 padding-right: 18px;
             }
 
-            .brand-mark {
-                width: 30px;
-                height: 30px;
-            }
-
-            .nav-link {
-                display: none;
-            }
-
-            .nav-actions {
-                gap: 8px;
-            }
-
-            .download-small {
-                min-height: 36px;
-                padding: 0 12px;
-                font-size: 0.76rem;
-            }
-
             .hero-inner {
                 padding-top: 60px;
                 padding-bottom: 62px;
                 gap: 46px;
-            }
-
-            .eyebrow {
-                margin-bottom: 21px;
-                font-size: 0.7rem;
             }
 
             h1 {
@@ -584,12 +488,6 @@
                 display: none;
             }
 
-            .desktop-note {
-                left: 18px;
-                bottom: 18px;
-                max-width: 185px;
-            }
-
             .site-footer {
                 flex-direction: column;
             }
@@ -605,21 +503,38 @@
 </head>
 <body>
     <nav class="site-nav">
-        <div class="nav-inner">
-            <a class="brand" href="/" aria-label="WakeBar home">
-                <span class="brand-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 8.5h11v5.3a4.2 4.2 0 0 1-4.2 4.2H9.2A4.2 4.2 0 0 1 5 13.8V8.5Z"/>
-                        <path d="M16 10h1.5a2.5 2.5 0 1 1 0 5H16"/>
-                        <path d="M7 5.5c0-1 1-1.2 1-2.2M11 5.5c0-1 1-1.2 1-2.2"/>
-                    </svg>
-                </span>
-                <span>WakeBar</span>
-            </a>
-            <div class="nav-actions">
-                <a class="nav-link" href="https://github.com/OhRats-Technologies/WakeBar">Source</a>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a class="logo" href="/" aria-label="WakeBar home">
+                    <img class="logo-image" src="https://assets.ohrats.party/latest/logo.png" alt="OhRats">
+                    <span class="logo-text">WakeBar</span>
+                </a>
+            </div>
+
+            <div class="cta-buttons">
                 <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
-                <a class="download-small" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">Download</a>
+                <div class="divider"></div>
+                <a class="cta-link" href="https://github.com/OhRats-Technologies/WakeBar">Source</a>
+                <div class="divider"></div>
+                <a class="cta-button" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">Download</a>
+            </div>
+
+            <button class="mobile-menu-btn" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu">
+            <a class="mobile-menu-link" href="https://github.com/OhRats-Technologies/WakeBar">Source</a>
+            <a class="mobile-menu-link" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">Download</a>
+            <div class="mobile-divider"></div>
+            <div class="mobile-theme-row">
+                <span class="mobile-theme-label">Theme</span>
+                <button class="mobile-theme-btn" data-theme-toggle aria-label="Toggle theme"></button>
             </div>
         </div>
     </nav>
@@ -628,16 +543,12 @@
         <div class="grid"></div>
         <div class="hero-inner">
             <div class="hero-copy">
-                <div class="eyebrow">
-                    <span class="eyebrow-mark" aria-hidden="true">☕</span>
-                    <span>macOS menu bar utility</span>
-                </div>
                 <h1>Keep your Mac awake.</h1>
-                <p class="lede">Tiny menu-bar controls for idle sleep and lid-close behavior. Nothing running in the way.</p>
+                <p class="lede">Tiny menu-bar controls for idle sleep and lid-close behavior.</p>
 
                 <div class="install-row">
                     <a class="primary-button" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">
-                        <span aria-hidden="true">●</span>
+                        <img class="mock-symbol apple-symbol button-symbol" src="/apple.logo.svg" alt="" aria-hidden="true">
                         Download for macOS
                     </a>
                     <div class="brew" title="brew install --cask OhRats-Technologies/tap/wakebar">
@@ -658,11 +569,13 @@
                 <div class="mac-shell">
                     <div class="mac-screen">
                         <div class="menu-bar">
-                            <span class="apple">●</span>
+                            <img class="mock-symbol apple-symbol" src="/apple.logo.svg" alt="" aria-hidden="true">
                             <div class="menu-status">
-                                <span class="cup-status" aria-hidden="true">☕</span>
-                                <span class="hide-mobile">◉</span>
-                                <span class="hide-mobile">⌁</span>
+                                <span class="cup-status" aria-hidden="true"><img class="mock-symbol" src="/cup.and.saucer.fill.svg" alt=""></span>
+                                <img class="mock-symbol switch-symbol hide-mobile" src="/switch.2.svg" alt="" aria-hidden="true">
+                                <img class="mock-symbol wifi-symbol hide-mobile" src="/wifi.svg" alt="" aria-hidden="true">
+                                <img class="mock-symbol search-symbol hide-mobile" src="/magnifyingglass.svg" alt="" aria-hidden="true">
+                                <img class="mock-symbol battery-symbol hide-mobile" src="/battery.100percent.svg" alt="" aria-hidden="true">
                                 <span>Sun Aug 23&nbsp;&nbsp;6:47 PM</span>
                             </div>
                         </div>
@@ -685,10 +598,6 @@
                             <div class="menu-row"><span></span><span>Quit WakeBar</span><span class="shortcut">⌘Q</span></div>
                         </div>
 
-                        <div class="desktop-note">
-                            <strong>Native macOS controls.</strong>
-                            WakeBar stays in the menu bar until you need it.
-                        </div>
                     </div>
                 </div>
             </div>
