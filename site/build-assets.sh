@@ -19,10 +19,11 @@ for source in "$src"/*.svg "$src"/social-card.png; do
     hash="$(sha256sum "$source" | cut -c1-12)"
     target="$stem.$hash$ext"
     cp "$source" "$assets/$target"
+    sed -i "s#/$name#/assets/$target#g" "$out/index.html"
     cat >> "$redirects" <<EOF
 location = /$name {
-    add_header Cache-Control "public, max-age=0, must-revalidate" always;
-    add_header Cloudflare-CDN-Cache-Control "public, max-age=0, must-revalidate" always;
+    add_header Cache-Control "no-cache" always;
+    add_header Cloudflare-CDN-Cache-Control "no-cache" always;
     return 307 /assets/$target;
 }
 EOF
