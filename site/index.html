@@ -50,14 +50,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --page-max: 1400px;
             --mock-bg: #d9d7d0;
             --mock-bar: rgba(246, 246, 244, 0.84);
             --mock-panel: rgba(246, 246, 245, 0.94);
             --mock-panel-border: rgba(0, 0, 0, 0.16);
             --mock-text: #171717;
             --mock-muted: #6d6d6d;
-            --mock-hover: rgba(0, 0, 0, 0.06);
             --mock-shadow: 0 28px 70px rgba(35, 29, 24, 0.24), 0 8px 20px rgba(35, 29, 24, 0.12);
         }
 
@@ -68,16 +66,13 @@
             --mock-panel-border: rgba(255, 255, 255, 0.13);
             --mock-text: #f5f5f4;
             --mock-muted: #ababaa;
-            --mock-hover: rgba(255, 255, 255, 0.07);
             --mock-shadow: 0 30px 90px rgba(0, 0, 0, 0.48), 0 8px 26px rgba(0, 0, 0, 0.32);
         }
 
-        body {
-            overflow-x: hidden;
-        }
-
         .primary-button {
-            display: inline-flex;
+            min-height: 52px;
+            padding: 0 1.5rem;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 9px;
@@ -85,20 +80,16 @@
             background: var(--or-text);
             color: var(--or-bg);
             font-weight: 600;
-            transition: transform 160ms ease, opacity 160ms ease, background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s ease;
         }
 
         .primary-button:hover {
-            transform: translateY(-1px);
-            opacity: 0.88;
+            opacity: 0.9;
         }
 
         .hero {
             position: relative;
-            min-height: calc(100vh - 4rem);
             border-bottom: 1px solid var(--or-border);
-            display: flex;
-            align-items: center;
             overflow: hidden;
             transition: border-color 0.3s ease;
         }
@@ -106,26 +97,27 @@
         .grid {
             position: absolute;
             inset: 0;
-            background-size: 42px 42px;
+            background-size: 40px 40px;
             background-image:
                 linear-gradient(to right, var(--or-grid) 1px, transparent 1px),
                 linear-gradient(to bottom, var(--or-grid) 1px, transparent 1px);
-            mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent 72%);
-            -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent 72%);
-            opacity: 0.35;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            opacity: 0.2;
             pointer-events: none;
         }
 
         .hero-inner {
             position: relative;
             width: 100%;
-            max-width: var(--page-max);
+            max-width: 1400px;
+            min-height: calc(100svh - 4rem);
             margin: 0 auto;
-            padding: 84px 28px 92px;
+            padding-inline: 1.5rem;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(520px, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             align-items: center;
-            gap: clamp(48px, 7vw, 112px);
+            gap: 4rem;
         }
 
         .hero-copy {
@@ -142,7 +134,7 @@
 
         .lede {
             max-width: 620px;
-            margin-top: 30px;
+            margin-top: 1.5rem;
             color: var(--or-text-muted);
             font-size: clamp(1rem, 1.3vw, 1.25rem);
             line-height: 1.65;
@@ -150,28 +142,25 @@
 
         .install-row {
             min-width: 0;
-            margin-top: 36px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: stretch;
-            gap: 12px;
+            margin-top: 2rem;
+            display: grid;
+            gap: 0.75rem;
         }
 
-        .primary-button {
-            min-height: 52px;
-            padding: 0 22px;
+        .primary-button,
+        .brew {
+            width: 100%;
         }
 
         .brew {
             min-width: 0;
             min-height: 52px;
-            max-width: 100%;
-            padding: 0 15px 0 18px;
+            padding: 0 1rem;
             border: 1px solid var(--or-border);
             background: var(--or-surface);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 0.75rem;
             color: var(--or-text);
             font-family: var(--or-font-mono);
             font-size: 0.78rem;
@@ -206,28 +195,26 @@
         }
 
         .meta {
-            margin-top: 21px;
+            margin-top: 1rem;
             font-family: var(--or-font-mono);
             font-size: 0.72rem;
             color: var(--or-text-muted);
         }
 
         .product-visual {
-            position: relative;
             min-width: 0;
         }
 
         .mac-shell {
             position: relative;
-            width: min(760px, 100%);
-            margin-left: auto;
+            width: 100%;
             border: 1px solid var(--or-border);
             transition: border-color 0.3s ease;
         }
 
         .mac-screen {
             position: relative;
-            height: 535px;
+            aspect-ratio: 16 / 10;
             overflow: hidden;
             background: var(--mock-bg);
             color: var(--mock-text);
@@ -342,10 +329,6 @@
             gap: 5px;
         }
 
-        .menu-row:hover {
-            background: var(--mock-hover);
-        }
-
         .menu-row .check {
             font-weight: 700;
             text-align: center;
@@ -386,12 +369,12 @@
         }
 
         .site-footer {
-            max-width: var(--page-max);
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 25px 28px 30px;
+            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
-            gap: 20px;
+            gap: 1.5rem;
             color: var(--or-text-muted);
             font-family: var(--or-font-mono);
             font-size: 0.68rem;
@@ -400,60 +383,34 @@
 
         .footer-links {
             display: flex;
-            gap: 20px;
+            gap: 1.5rem;
         }
 
         .footer-links a:hover {
             color: var(--or-text);
         }
 
-        @media (max-width: 1100px) {
-            .hero {
-                min-height: auto;
-            }
-
+        @media (max-width: 1200px) {
             .hero-inner {
                 grid-template-columns: 1fr;
-                padding-top: 74px;
-                gap: 58px;
+                min-height: 0;
+                padding-block: 4rem;
+                gap: 4rem;
             }
 
             .hero-copy {
-                max-width: 760px;
-            }
-
-            .install-row {
-                max-width: 620px;
-                display: grid;
-                grid-template-columns: 1fr;
-            }
-
-            .primary-button,
-            .brew {
-                width: 100%;
-            }
-
-            h1 {
-                max-width: 800px;
+                max-width: 48rem;
             }
 
             .mac-shell {
-                margin: 0;
-                width: 100%;
+                max-width: 48rem;
             }
         }
 
         @media (max-width: 720px) {
-            .hero-inner,
-            .site-footer {
-                padding-left: 18px;
-                padding-right: 18px;
-            }
-
             .hero-inner {
-                padding-top: 60px;
-                padding-bottom: 62px;
-                gap: 46px;
+                padding-block: 3rem;
+                gap: 3rem;
             }
 
             h1 {
@@ -462,23 +419,7 @@
             }
 
             .lede {
-                margin-top: 23px;
                 font-size: 0.98rem;
-            }
-
-            .install-row {
-                margin-top: 29px;
-                display: grid;
-                grid-template-columns: 1fr;
-            }
-
-            .primary-button,
-            .brew {
-                width: 100%;
-            }
-
-            .brew {
-                min-width: 0;
             }
 
             .brew code {
@@ -486,6 +427,7 @@
             }
 
             .mac-screen {
+                aspect-ratio: auto;
                 height: 440px;
             }
 
