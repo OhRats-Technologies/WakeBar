@@ -82,7 +82,7 @@
             background: var(--or-text);
             color: var(--or-bg);
             font-weight: 600;
-            transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s ease;
+            transition: background-color var(--or-theme-transition), color var(--or-theme-transition), opacity 0.2s ease;
         }
 
         .primary-button:hover {
@@ -93,20 +93,7 @@
             position: relative;
             border-bottom: 1px solid var(--or-border);
             overflow: hidden;
-            transition: border-color 0.3s ease;
-        }
-
-        .grid {
-            position: absolute;
-            inset: 0;
-            background-size: 40px 40px;
-            background-image:
-                linear-gradient(to right, var(--or-grid) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--or-grid) 1px, transparent 1px);
-            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-            opacity: 0.2;
-            pointer-events: none;
+            transition: border-color var(--or-theme-transition);
         }
 
         .hero-inner {
@@ -166,7 +153,7 @@
             color: var(--or-text);
             font-family: var(--or-font-mono);
             font-size: 0.78rem;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            transition: background-color var(--or-theme-transition), border-color var(--or-theme-transition), color var(--or-theme-transition);
         }
 
         .brew-prefix {
@@ -211,7 +198,7 @@
             position: relative;
             width: 100%;
             border: 1px solid var(--or-border);
-            transition: border-color 0.3s ease;
+            transition: border-color var(--or-theme-transition);
         }
 
         .mac-screen {
@@ -220,7 +207,7 @@
             overflow: hidden;
             background: var(--mock-bg);
             color: var(--mock-text);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color var(--or-theme-transition), color var(--or-theme-transition);
         }
 
         .menu-bar {
@@ -234,7 +221,7 @@
             align-items: center;
             justify-content: space-between;
             font: 600 12px/1 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            transition: background-color var(--or-theme-transition), border-color var(--or-theme-transition);
         }
 
         .mock-symbol {
@@ -295,7 +282,7 @@
             place-items: center;
             border-radius: 5px;
             background: color-mix(in srgb, var(--mock-text) 12%, transparent);
-            transition: background-color 0.3s ease;
+            transition: background-color var(--or-theme-transition);
         }
 
         .cup-status .mock-symbol {
@@ -318,7 +305,7 @@
             backdrop-filter: blur(30px) saturate(1.35);
             -webkit-backdrop-filter: blur(30px) saturate(1.35);
             font: 13px/1.2 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            transition: background-color var(--or-theme-transition), border-color var(--or-theme-transition), color var(--or-theme-transition), box-shadow var(--or-theme-transition);
         }
 
         .menu-row {
@@ -363,7 +350,7 @@
             backdrop-filter: blur(30px) saturate(1.35);
             -webkit-backdrop-filter: blur(30px) saturate(1.35);
             font: 12.5px/1.2 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            transition: background-color var(--or-theme-transition), border-color var(--or-theme-transition), color var(--or-theme-transition), box-shadow var(--or-theme-transition);
         }
 
         .sleep-options .menu-row {
@@ -457,12 +444,6 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                scroll-behavior: auto !important;
-                transition: none !important;
-            }
-        }
     </style>
 </head>
 <body>
@@ -504,7 +485,7 @@
     </nav>
 
     <main class="hero">
-        <div class="grid"></div>
+        <div class="ohrats-grid"></div>
         <div class="hero-inner">
             <div class="hero-copy">
                 <h1>Keep your Mac awake.</h1>
