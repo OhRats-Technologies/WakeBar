@@ -71,22 +71,11 @@
             --mock-shadow: 0 30px 90px rgba(0, 0, 0, 0.48), 0 8px 26px rgba(0, 0, 0, 0.32);
         }
 
-        .primary-button {
+        .download-button {
             min-height: 52px;
             padding: 0 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 9px;
-            border: 1px solid var(--or-text);
-            background: var(--or-text);
-            color: var(--or-bg);
             font-weight: 600;
-            transition: background-color var(--or-theme-transition), color var(--or-theme-transition), opacity 0.2s ease;
-        }
-
-        .primary-button:hover {
-            opacity: 0.9;
         }
 
         .hero {
@@ -136,7 +125,7 @@
             gap: 0.75rem;
         }
 
-        .primary-button,
+        .download-button,
         .brew {
             width: 100%;
         }
@@ -492,7 +481,7 @@
                 <p class="lede">Tiny menu-bar controls for idle sleep and lid-close behavior.</p>
 
                 <div class="install-row">
-                    <a class="primary-button" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">
+                    <a class="or-button download-button" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">
                         <img class="mock-symbol apple-symbol button-symbol" src="/apple.logo.svg" alt="" aria-hidden="true">
                         Download for macOS
                     </a>
