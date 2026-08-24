@@ -6,6 +6,5 @@ RUN ./build-assets.sh /src /out
 FROM nginx:alpine
 COPY site/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=assets /out/ /usr/share/nginx/html/
-COPY --from=assets /out/redirects.conf /etc/nginx/asset-redirects.conf
 
 EXPOSE 80

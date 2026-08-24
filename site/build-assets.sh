@@ -4,12 +4,10 @@ set -eu
 src="${1:-/src}"
 out="${2:-/out}"
 assets="$out/assets"
-redirects="$out/redirects.conf"
 
 rm -rf "$out"
 mkdir -p "$assets"
 cp "$src/index.html" "$src/robots.txt" "$src/sitemap.xml" "$out/"
-: > "$redirects"
 
 for source in "$src"/*.svg "$src"/social-card.png; do
     [ -f "$source" ] || continue
@@ -19,12 +17,6 @@ for source in "$src"/*.svg "$src"/social-card.png; do
     hash="$(sha256sum "$source" | cut -c1-12)"
     target="$stem.$hash$ext"
     cp "$source" "$assets/$target"
+    cp "$source" "$out/$name"
     sed -i "s#/$name#/assets/$target#g" "$out/index.html"
-    cat >> "$redirects" <<EOF
-location = /$name {
-    add_header Cache-Control "private, max-age=300, must-revalidate" always;
-    add_header Cloudflare-CDN-Cache-Control "public, max-age=300, must-revalidate" always;
-    return 307 /assets/$target;
-}
-EOF
 done
