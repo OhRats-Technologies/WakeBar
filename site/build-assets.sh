@@ -17,6 +17,5 @@ for source in "$src"/*.svg "$src"/social-card.png; do
     hash="$(sha256sum "$source" | cut -c1-12)"
     target="$stem.$hash$ext"
     cp "$source" "$assets/$target"
-    cp "$source" "$out/$name"
     sed -i "s#/$name#/assets/$target#g" "$out/index.html"
 done
