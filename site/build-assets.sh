@@ -22,8 +22,8 @@ for source in "$src"/*.svg "$src"/social-card.png; do
     sed -i "s#/$name#/assets/$target#g" "$out/index.html"
     cat >> "$redirects" <<EOF
 location = /$name {
-    add_header Cache-Control "no-store" always;
-    add_header Cloudflare-CDN-Cache-Control "no-store" always;
+    add_header Cache-Control "public, max-age=300, must-revalidate" always;
+    add_header Cloudflare-CDN-Cache-Control "public, max-age=300, must-revalidate" always;
     return 307 /assets/$target;
 }
 EOF
