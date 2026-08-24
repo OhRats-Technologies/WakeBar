@@ -47,6 +47,7 @@
     <script src="https://assets.ohrats.party/assets/theme.b6e0fe408633.js"></script>
     <script src="https://assets.ohrats.party/assets/menu.a8b9a29f9ccc.js" defer></script>
     <link rel="stylesheet" href="https://assets.ohrats.party/assets/ohrats.7911fd35d5d3.css">
+    <link rel="stylesheet" href="https://assets.ohrats.party/assets/copy.e4c6bbb26b56.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -126,50 +127,8 @@
         }
 
         .download-button,
-        .brew {
+        .or-copy-field {
             width: 100%;
-        }
-
-        .brew {
-            min-width: 0;
-            min-height: 52px;
-            padding: 0 1rem;
-            border: 1px solid var(--or-border);
-            background: var(--or-surface);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--or-text);
-            font-family: var(--or-font-mono);
-            font-size: 0.78rem;
-            transition: background-color var(--or-theme-transition), border-color var(--or-theme-transition), color var(--or-theme-transition);
-        }
-
-        .brew-prefix {
-            color: var(--or-text-muted);
-        }
-
-        .brew code {
-            min-width: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .copy {
-            flex: 0 0 auto;
-            border: 0;
-            background: transparent;
-            color: var(--or-text-muted);
-            cursor: pointer;
-            width: 28px;
-            height: 28px;
-            display: grid;
-            place-items: center;
-        }
-
-        .copy:hover {
-            color: var(--or-text);
         }
 
         .meta {
@@ -485,15 +444,10 @@
                         <img class="mock-symbol apple-symbol button-symbol" src="/apple.logo.svg" alt="" aria-hidden="true">
                         Download for macOS
                     </a>
-                    <div class="brew" title="brew install --cask OhRats-Technologies/tap/wakebar">
-                        <span class="brew-prefix">$</span>
+                    <div class="or-copy-field" title="brew install --cask OhRats-Technologies/tap/wakebar">
+                        <span class="or-copy-prefix">$</span>
                         <code id="brew-command">brew install --cask OhRats-Technologies/tap/wakebar</code>
-                        <button class="copy" id="copy-brew" aria-label="Copy Homebrew command">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <rect x="9" y="9" width="11" height="11" rx="1"></rect>
-                                <path d="M15 9V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h4"></path>
-                            </svg>
-                        </button>
+                        <button class="or-copy-button" id="copy-brew" aria-label="Copy Homebrew command"><span class="or-copy-icon" aria-hidden="true"></span></button>
                     </div>
                 </div>
                 <p class="meta">Free &amp; open source · macOS 14+</p>
@@ -552,8 +506,12 @@
             const command = document.getElementById("brew-command").textContent;
             try {
                 await navigator.clipboard.writeText(command);
+                button.dataset.copied = "true";
                 button.setAttribute("aria-label", "Copied");
-                setTimeout(() => button.setAttribute("aria-label", "Copy Homebrew command"), 1200);
+                setTimeout(() => {
+                    delete button.dataset.copied;
+                    button.setAttribute("aria-label", "Copy Homebrew command");
+                }, 1200);
             } catch (_) {}
         });
     </script>
