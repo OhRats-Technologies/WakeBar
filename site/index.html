@@ -46,7 +46,7 @@
     <link rel="icon" type="image/svg+xml" href="https://assets.ohrats.party/assets/logo.092a1cece4d0.svg">
     <script src="https://assets.ohrats.party/assets/theme.b6e0fe408633.js"></script>
     <script src="https://assets.ohrats.party/assets/menu.a8b9a29f9ccc.js" defer></script>
-    <link rel="stylesheet" href="https://assets.ohrats.party/assets/ohrats.7911fd35d5d3.css">
+    <link rel="stylesheet" href="https://assets.ohrats.party/assets/ohrats.eb38b77e6b5e.css">
     <link rel="stylesheet" href="https://assets.ohrats.party/assets/copy.e4c6bbb26b56.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -305,28 +305,6 @@
             grid-template-columns: 20px minmax(0, 1fr);
         }
 
-        .site-footer {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            gap: 1.5rem;
-            color: var(--or-text-muted);
-            font-family: var(--or-font-mono);
-            font-size: 0.68rem;
-            text-transform: uppercase;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--or-text);
-        }
-
         @media (max-width: 1200px) {
             .hero-inner {
                 grid-template-columns: 1fr;
@@ -387,9 +365,6 @@
                 display: none;
             }
 
-            .site-footer {
-                flex-direction: column;
-            }
         }
 
     </style>
@@ -398,7 +373,7 @@
     <nav class="site-nav">
         <div class="nav-container">
             <div class="nav-left">
-                <a class="logo" href="https://ohrats.party" aria-label="OhRats home">
+                <a class="logo" href="/" aria-label="WakeBar home">
                     <img class="logo-image" src="https://assets.ohrats.party/assets/logo.092a1cece4d0.svg" alt="OhRats">
                     <span class="logo-text">WakeBar</span>
                 </a>
@@ -492,12 +467,38 @@
         </div>
     </main>
 
-    <footer class="site-footer">
-        <span>© 2026 OhRats Technologies</span>
-        <div class="footer-links">
-            <a href="https://github.com/OhRats-Technologies/WakeBar">GitHub</a>
-            <a href="https://github.com/OhRats-Technologies/WakeBar/blob/main/LICENSE">AGPL-3.0</a>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="https://ohrats.party/" aria-label="OhRats Technologies home">
+                    <img src="https://assets.ohrats.party/assets/logo.092a1cece4d0.svg" alt="OhRats" class="footer-logo">
+                </a>
+                <div class="footer-socials">
+                    <a href="https://x.com/ohratsparty" class="footer-social-link" aria-label="X (Twitter)">
+                        <svg viewBox="0 0 32 32" fill="none"><path d="M28 28L18.6145 14.0124L18.6305 14.0255L27.0929 4H24.265L17.3713 12.16L11.8968 4H4.48021L13.2425 17.0593L13.2414 17.0582L4 28H6.82792L14.4921 18.9215L20.5834 28H28ZM10.7763 6.18182L23.9449 25.8182H21.7039L8.52468 6.18182H10.7763Z" fill="currentColor"/></svg>
+                    </a>
+                    <a href="https://github.com/OhRats-Technologies" class="footer-social-link" aria-label="GitHub"><span class="github-icon" aria-hidden="true"></span></a>
+                </div>
+            </div>
+            <nav class="footer-links">
+                <div class="footer-column">
+                    <span class="footer-column-label">Tools</span>
+                    <a href="https://wakebar.ohrats.party/" class="footer-link">WakeBar</a>
+                    <a href="https://rc.ohrats.party/" class="footer-link">RC</a>
+                </div>
+                <div class="footer-column">
+                    <span class="footer-column-label">Resources</span>
+                    <a href="https://ohrats.party/blog" class="footer-link">Blog</a>
+                    <a href="https://github.com/OhRats-Technologies" class="footer-link">GitHub</a>
+                </div>
+                <div class="footer-column">
+                    <span class="footer-column-label">Company</span>
+                    <a href="https://ohrats.party/#research" class="footer-link">Research</a>
+                    <a href="mailto:contact@ohrats.party" class="footer-link">Contact</a>
+                </div>
+            </nav>
         </div>
+        <div class="footer-bottom"><span class="footer-copyright">© 2026 OhRats Technologies. All rights reserved.</span></div>
     </footer>
 
     <script>
