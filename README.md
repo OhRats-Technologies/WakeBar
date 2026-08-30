@@ -1,6 +1,6 @@
 # [WakeBar](https://wakebar.ohrats.party)
 
-Single-file macOS menu-bar utility for keeping your Mac awake.
+Single-file macOS menu-bar utility for keeping your Mac awake. Handy for long-running builds and remote RC sessions.
 
 ![WakeBar](wakebar.png)
 
