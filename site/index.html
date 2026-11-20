@@ -47,6 +47,7 @@
     <script src="https://assets.ohrats.party/v1/theme.js"></script>
     <script src="https://assets.ohrats.party/v1/menu.js" defer></script>
     <link rel="stylesheet" href="https://assets.ohrats.party/v1/ohrats.css">
+    <link rel="stylesheet" href="https://assets.ohrats.party/v1/landing.css">
     <link rel="stylesheet" href="https://assets.ohrats.party/v1/copy.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,76 +78,7 @@
             padding: 0 1.5rem;
             gap: 9px;
             font-weight: 600;
-        }
-
-        .hero {
-            position: relative;
-            border-bottom: 1px solid var(--or-border);
-            overflow: hidden;
-            transition: border-color var(--or-theme-transition);
-        }
-
-        .hero-inner {
-            position: relative;
             width: 100%;
-            max-width: 1400px;
-            min-height: calc(100svh - 4rem);
-            margin: 0 auto;
-            padding-inline: 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            align-items: center;
-            gap: 4rem;
-        }
-
-        .hero-copy {
-            min-width: 0;
-        }
-
-        h1 {
-            max-width: 680px;
-            font-size: clamp(3.4rem, 6.1vw, 6.4rem);
-            letter-spacing: -0.072em;
-            line-height: 0.92;
-            font-weight: 700;
-        }
-
-        .lede {
-            max-width: 620px;
-            margin-top: 1.5rem;
-            color: var(--or-text-muted);
-            font-size: clamp(1rem, 1.3vw, 1.25rem);
-            line-height: 1.65;
-        }
-
-        .install-row {
-            min-width: 0;
-            margin-top: 2rem;
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .download-button,
-        .or-copy-field {
-            width: 100%;
-        }
-
-        .meta {
-            margin-top: 1rem;
-            font-family: var(--or-font-mono);
-            font-size: 0.72rem;
-            color: var(--or-text-muted);
-        }
-
-        .product-visual {
-            min-width: 0;
-        }
-
-        .mac-shell {
-            position: relative;
-            width: 100%;
-            border: 1px solid var(--or-border);
-            transition: border-color var(--or-theme-transition);
         }
 
         .mac-screen {
@@ -305,38 +237,7 @@
             grid-template-columns: 20px minmax(0, 1fr);
         }
 
-        @media (max-width: 1200px) {
-            .hero-inner {
-                grid-template-columns: 1fr;
-                min-height: 0;
-                padding-block: 4rem;
-                gap: 4rem;
-            }
-
-            .mac-shell {
-                max-width: 48rem;
-            }
-        }
-
         @media (max-width: 720px) {
-            .hero-inner {
-                padding-block: 3rem;
-                gap: 3rem;
-            }
-
-            h1 {
-                font-size: clamp(3.1rem, 15vw, 4.8rem);
-                letter-spacing: -0.07em;
-            }
-
-            .lede {
-                font-size: 0.98rem;
-            }
-
-            .brew code {
-                font-size: 0.68rem;
-            }
-
             .mac-screen {
                 aspect-ratio: auto;
                 height: 440px;
@@ -407,14 +308,14 @@
         </div>
     </nav>
 
-    <main class="hero">
+    <main class="or-hero">
         <div class="ohrats-grid"></div>
-        <div class="hero-inner">
-            <div class="hero-copy">
+        <div class="or-hero-inner">
+            <div class="or-hero-copy">
                 <h1>Keep your Mac awake.</h1>
-                <p class="lede">Tiny menu-bar controls for idle sleep and lid-close behavior.</p>
+                <p class="or-hero-lede">Tiny menu-bar controls for idle sleep and lid-close behavior.</p>
 
-                <div class="install-row">
+                <div class="or-install-row">
                     <a class="or-button download-button" href="https://github.com/OhRats-Technologies/WakeBar/releases/latest">
                         <img class="mock-symbol apple-symbol button-symbol" src="/apple.logo.svg" alt="" aria-hidden="true">
                         Download for macOS
@@ -425,11 +326,11 @@
                         <button class="or-copy-button" id="copy-brew" aria-label="Copy Homebrew command"><span class="or-copy-icon" aria-hidden="true"></span></button>
                     </div>
                 </div>
-                <p class="meta">Free &amp; open source · macOS 14+</p>
+                <p class="or-hero-meta">Free &amp; open source · macOS 14+</p>
             </div>
 
-            <div class="product-visual" aria-label="Stylized preview of the WakeBar macOS menu">
-                <div class="mac-shell">
+            <div class="or-hero-visual" aria-label="Stylized preview of the WakeBar macOS menu">
+                <div class="or-mock-frame">
                     <div class="mac-screen">
                         <div class="menu-bar">
                             <img class="mock-symbol apple-symbol" src="/apple.logo.svg" alt="" aria-hidden="true">
