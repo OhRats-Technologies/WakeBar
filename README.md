@@ -1,4 +1,8 @@
-# [WakeBar](https://wakebar.ohrats.party)
+<p align="center">
+  <a href="https://wakebar.ohrats.party">
+    <img src="assets/header.svg" alt="WakeBar" width="100%" />
+  </a>
+</p>
 
 [![release](https://img.shields.io/github/v/release/OhRats-Technologies/WakeBar?sort=semver&logo=github)](https://github.com/OhRats-Technologies/WakeBar/releases/latest)
 [![build](https://img.shields.io/github/actions/workflow/status/OhRats-Technologies/WakeBar/build.yml?branch=main&label=build&logo=github)](https://github.com/OhRats-Technologies/WakeBar/actions/workflows/build.yml)

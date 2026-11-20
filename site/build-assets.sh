@@ -7,7 +7,7 @@ assets="$out/assets"
 
 rm -rf "$out"
 mkdir -p "$assets"
-cp "$src/index.html" "$src/robots.txt" "$src/sitemap.xml" "$out/"
+cp "$src/index.html" "$src/404.html" "$src/robots.txt" "$src/sitemap.xml" "$out/"
 
 for source in "$src"/*.svg "$src"/social-card.png; do
     [ -f "$source" ] || continue
